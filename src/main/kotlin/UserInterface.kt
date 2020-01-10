@@ -1,11 +1,8 @@
-import javafx.animation.Interpolator
-import javafx.animation.RotateTransition
 import javafx.animation.SequentialTransition
 import javafx.animation.Timeline
 import javafx.application.Application
 import javafx.scene.shape.Polygon
 import tornadofx.*
-import kotlin.concurrent.thread
 
 fun main() {
     Application.launch(MyApp::class.java)
@@ -20,9 +17,14 @@ class MyView: View() {
         button("Start") {
             setOnAction {
                 val queue = SequentialTransition()
-                (0 until 100).asSequence().map { it.toDouble() * 10.0 }.forEach { frame ->
+
+                queue.children += timeline(play=false) {
+                    vehicle.move(300.0, 300.0, 0.0, this)
+                }
+
+                animations.forEach { move ->
                     queue.children += timeline(play=false) {
-                        vehicle.move(frame, frame, frame, this)
+                        vehicle.move(move.point.x, move.point.y, move.rotation, this)
                     }
                 }
 
@@ -61,14 +63,14 @@ class VehicleSprite: Polygon() {
                 25.0, 46.0,
 
                 // top antenna
-                29.5, 30.5,
+                29.75, 30.5,
                 30.0, 0.0,
-                30.5, 30.5
+                30.25, 30.5
         )
     }
 
     fun move(x: Double, y: Double, degrees: Double, timeline: Timeline) = timeline.run {
-        keyframe(100.millis) {
+        keyframe(2000.millis) {
             keyvalue(this@VehicleSprite.rotateProperty(), degrees)
             keyvalue(this@VehicleSprite.translateXProperty(), x)
             keyvalue(this@VehicleSprite.translateYProperty(), y)
