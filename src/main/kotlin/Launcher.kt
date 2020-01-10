@@ -6,15 +6,21 @@ fun main() {
     val vehicle = Vehicle()
 
     (0 until 100).forEach { frame ->
-        vehicle += Point(y = 10.0)
-        vehicle.rotate(1.0)
+        vehicle.moveForwardAndRotate(10.0, 1.0)
         println(vehicle)
+    }
+}
+
+val animations = Vehicle().let { vehicle ->
+    (0 until 100).map { frame ->
+        vehicle.moveForwardAndRotate(10.0, 1.0)
+        vehicle.location
     }
 }
 
 class Vehicle {
 
-    var location = Point(0.0, 0.0)
+    var location = Point(30.0, 30.0)
 
     // Must be between 0.0 and 360.0
     var rotationDegrees = 0.0
@@ -29,6 +35,11 @@ class Vehicle {
 
     fun moveForward(distance: Double) {
         location = location.shift(0.0, distance).rotate(rotationDegrees)
+    }
+
+    fun moveForwardAndRotate(distance: Double, rotate: Double) {
+        rotationDegrees += rotate
+        location = location.shift(0.0, distance).rotate(rotate)
     }
 
     fun rotate(degrees: Double) {
