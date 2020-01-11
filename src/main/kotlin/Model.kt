@@ -4,7 +4,7 @@ import kotlin.math.sin
 
 val animations = Vehicle().let { vehicle ->
 
-    (0 until 200).map { _ ->
+    (0 until 200).map { i ->
         vehicle.moveForwardAndRotate(10.0, 10.0)
     }
 }
