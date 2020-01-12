@@ -26,8 +26,12 @@ class MyView: View() {
                     isAutoReverse = true
 
                     path = Path().apply {
-                        elements.add(MoveTo(100.0, 150.0))
-                        elements.add(QuadCurveTo(125.0, 200.0, 175.0, 250.0))
+                        animations.first().let {
+                            elements.add(MoveTo(it.point.x, it.point.y))
+                        }
+                        animations.asSequence().drop(1).forEach {
+                            elements.add(LineTo(it.point.x, it.point.y))
+                        }
                     }
 
                     play()

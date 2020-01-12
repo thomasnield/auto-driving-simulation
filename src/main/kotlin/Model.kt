@@ -4,8 +4,8 @@ import kotlin.math.sin
 
 val animations = Vehicle().let { vehicle ->
 
-    (0 until 200).map { i ->
-        vehicle.moveForwardAndRotate(10.0, 10.0)
+    (0 until 100).map { i ->
+        vehicle.moveForwardAndRotate(50.0, i.toDouble())
     }
 }
 
@@ -13,7 +13,7 @@ class Movement(val point: Point, val rotation: Double)
 
 class Vehicle {
 
-    var location = Point(0.0, 0.0)
+    var location = Point(300.0, 300.0)
 
     // Must be between 0.0 and 360.0
     var rotationDegrees = 0.0
@@ -22,13 +22,10 @@ class Vehicle {
     val sensorTipRight get() = location.shift(1.0, 20.0).rotate(rotationDegrees)
     val sensorTipCenter get() = location.shift(20.0)
 
-    operator fun plusAssign(point: Point) {
-        location = location.shift(point.x, point.y)
-    }
-
     fun moveForwardAndRotate(distance: Double, rotate: Double): Movement {
         rotationDegrees += rotate
-        location = location.shift(rotate, distance).rotate(rotate)
+        val radians = rotationDegrees * (Math.PI / 180.0)
+        location = location.shift(distance * sin(radians), distance * cos(radians))
         return Movement(location, rotationDegrees)
     }
 
