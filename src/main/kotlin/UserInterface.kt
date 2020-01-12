@@ -2,6 +2,7 @@ import javafx.animation.PathTransition
 import javafx.animation.SequentialTransition
 import javafx.animation.Timeline
 import javafx.application.Application
+import javafx.scene.paint.Color
 import javafx.scene.shape.*
 import tornadofx.*
 
@@ -39,7 +40,12 @@ class MyView: View() {
             }
         }
         center = pane {
+            polygon(250.0, 250.0, 200.0, 300.0, 275.0, 400.0, 400.0, 200.0) {
+                fill = Color.WHITE
+            }
+
             this += vehicle
+
             useMaxHeight = true
             useMaxWidth = true
         }

@@ -1,11 +1,12 @@
 import kotlin.math.cos
 import kotlin.math.sin
 
+// graph https://www.desmos.com/calculator/zllkuimfec
 
 val animations = Vehicle().let { vehicle ->
 
     (0 until 100).map { i ->
-        vehicle.moveForwardAndRotate(50.0, i.toDouble())
+        vehicle.moveForwardAndRotate(10.0, 30.0)
     }
 }
 
@@ -31,6 +32,8 @@ class Vehicle {
 
     override fun toString() = "$location -> $sensorTipLeft \\ $sensorTipCenter / $sensorTipRight"
 }
+
+
 
 data class Point(val x: Double = 0.0, val y: Double = 0.0) {
 
